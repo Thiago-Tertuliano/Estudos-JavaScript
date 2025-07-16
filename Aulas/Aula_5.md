@@ -40,7 +40,7 @@ for (inicialização; condição; incremento) {
 ```javascript
 // Contagem básica
 for (let i = 1; i <= 5; i++) {
-    console.log("Repetição número", i);
+  console.log("Repetição número", i);
 }
 
 // Contagem regressiva
@@ -108,8 +108,8 @@ while (condição) {
 let contador = 1;
 
 while (contador <= 3) {
-    console.log("Contando...", contador);
-    contador++;
+  console.log("Contando...", contador);
+  contador++;
 }
 
 // Adivinhação de número
@@ -332,7 +332,7 @@ for (let i = 0; i < frutas.length; i++) {
 
 ```javascript
 for (let fruta of frutas) {
-    console.log("🍉", fruta);
+  console.log("🍉", fruta);
 }
 ```
 
