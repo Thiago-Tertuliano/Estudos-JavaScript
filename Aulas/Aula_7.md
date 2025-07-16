@@ -492,17 +492,17 @@ atualizar();
 <head>
     <title>Contador Simples</title>
     <style>
-        body {
-            text-align: center;
-            font-family: Arial;
-            margin-top: 50px;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            font-size: 18px;
-            cursor: pointer;
-        }
+body {
+  text-align: center;
+  font-family: Arial;
+  margin-top: 50px;
+}
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
     </style>
 </head>
 <body>
@@ -512,38 +512,38 @@ atualizar();
     <button id="aumentar">+</button>
     
     <script>
-        let valor = 0;
-        const h1 = document.getElementById("valor");
-        const btnMenos = document.getElementById("diminuir");
-        const btnMais = document.getElementById("aumentar");
-        const btnReset = document.getElementById("resetar");
-        
-        btnMais.addEventListener("click", () => {
-            valor++;
-            atualizar();
-        });
-        
-        btnMenos.addEventListener("click", () => {
-            valor--;
-            atualizar();
-        });
-        
-        btnReset.addEventListener("click", () => {
-            valor = 0;
-            atualizar();
-        });
-        
-        function atualizar() {
-            h1.innerText = valor;
-            
-            if (valor > 0) {
-                h1.style.color = "green";
-            } else if (valor < 0) {
-                h1.style.color = "red";
-            } else {
-                h1.style.color = "black";
-            }
-        }
+let valor = 0;
+const h1 = document.getElementById("valor");
+const btnMenos = document.getElementById("diminuir");
+const btnMais = document.getElementById("aumentar");
+const btnReset = document.getElementById("resetar");
+
+btnMais.addEventListener("click", () => {
+  valor++;
+  atualizar();
+});
+
+btnMenos.addEventListener("click", () => {
+  valor--;
+  atualizar();
+});
+
+btnReset.addEventListener("click", () => {
+  valor = 0;
+  atualizar();
+});
+
+function atualizar() {
+  h1.innerText = valor;
+
+  if (valor > 0) {
+    h1.style.color = "green";
+  } else if (valor < 0) {
+    h1.style.color = "red";
+  } else {
+    h1.style.color = "black";
+  }
+}
     </script>
 </body>
 </html>

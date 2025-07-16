@@ -223,7 +223,7 @@ Eventos são **ações do usuário** que o JavaScript pode detectar e responder.
 const botao = document.querySelector("#botao");
 
 botao.addEventListener("click", function() {
-    alert("Você clicou!");
+  alert("Você clicou!");
 });
 
 // Método 2: Arrow function
@@ -302,13 +302,13 @@ document.addEventListener("keydown", function(evento) {
     </style>
 </head>
 <body>
-    <h1 id="titulo">Olá, Thiago!</h1>
+<h1 id="titulo">Olá, Thiago!</h1>
     
     <div class="container">
         <input id="nome" type="text" placeholder="Digite seu nome">
         <span id="contador">0</span> caracteres
         
-        <button id="botao">Mudar título</button>
+<button id="botao">Mudar título</button>
         <button id="toggle">Alternar visibilidade</button>
         <button id="adicionar">Adicionar item</button>
     </div>

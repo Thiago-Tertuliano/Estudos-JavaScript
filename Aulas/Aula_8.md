@@ -121,13 +121,13 @@ Vamos criar um projeto completo que aplica tudo que você aprendeu!
 
     <script>
         // Array de frases motivacionais
-        const frases = [
-            "A prática leva à perfeição.",
-            "Não desista até se orgulhar.",
-            "Tudo começa com um simples passo.",
-            "Seja constante, não perfeito.",
-            "Você é mais capaz do que pensa.",
-            "Erros fazem parte do caminho.",
+const frases = [
+  "A prática leva à perfeição.",
+  "Não desista até se orgulhar.",
+  "Tudo começa com um simples passo.",
+  "Seja constante, não perfeito.",
+  "Você é mais capaz do que pensa.",
+  "Erros fazem parte do caminho.",
             "Code, teste, aprenda, repita.",
             "A persistência é a chave do sucesso.",
             "Cada dia é uma nova oportunidade.",
@@ -300,7 +300,7 @@ const frases = [
 ];
 
 function gerarFrase() {
-    const indice = Math.floor(Math.random() * frases.length);
+  const indice = Math.floor(Math.random() * frases.length);
     return frases[indice];
 }
 
