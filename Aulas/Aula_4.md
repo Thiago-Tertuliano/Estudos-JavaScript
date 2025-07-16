@@ -23,9 +23,9 @@ if (idade >= 18) {
 let idade = 16;
 
 if (idade >= 18) {
-    console.log("Você é maior de idade.");
+  console.log("Você é maior de idade.");
 } else {
-    console.log("Você é menor de idade.");
+  console.log("Você é menor de idade.");
 }
 ```
 
@@ -64,13 +64,13 @@ Use `else if` quando precisar verificar **várias condições** em sequência.
 let nota = 7;
 
 if (nota >= 9) {
-    console.log("Excelente!");
+  console.log("Excelente!");
 } else if (nota >= 7) {
     console.log("Bom!");
 } else if (nota >= 6) {
-    console.log("Aprovado");
+  console.log("Aprovado");
 } else {
-    console.log("Reprovado");
+  console.log("Reprovado");
 }
 ```
 
@@ -173,7 +173,7 @@ console.log(verificarLogin("user", "123456"));  // Acesso negado...
 function calcularDesconto(idade, temCartao) {
     if (idade >= 60 || temCartao) {
         return "Desconto de 10% aplicado!";
-    } else {
+} else {
         return "Sem desconto.";
     }
 }
@@ -195,17 +195,17 @@ Use `switch` quando precisar comparar **um valor específico** com várias opç�
 let cor = "verde";
 
 switch (cor) {
-    case "vermelho":
+  case "vermelho":
         console.log("Pare!");
-        break;
-    case "amarelo":
+    break;
+  case "amarelo":
         console.log("Atenção!");
-        break;
-    case "verde":
+    break;
+  case "verde":
         console.log("Siga!");
-        break;
-    default:
-        console.log("Cor inválida");
+    break;
+  default:
+    console.log("Cor inválida");
 }
 ```
 
