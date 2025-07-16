@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 7 - Contador Interativo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .contador {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 30px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .contador.positivo {
+            color: #28a745;
+            transform: scale(1.1);
+        }
+
+        .contador.negativo {
+            color: #dc3545;
+            transform: scale(1.1);
+        }
+
+        .contador.zero {
+            color: #ffc107;
+        }
+
+        .botoes {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        button {
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            min-width: 60px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-incrementar {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-decrementar {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-resetar {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-personalizado {
+            background: #007bff;
+            color: white;
+        }
+
+        .controles-avancados {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+        }
+
+        .controles-avancados h3 {
+            margin-bottom: 15px;
+        }
+
+        input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+            font-size: 1em;
+        }
+
+        .historico {
+            margin-top: 20px;
+            max-height: 150px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .historico-item {
+            padding: 5px;
+            margin: 2px 0;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        .historico-item.positivo {
+            background: rgba(40, 167, 69, 0.3);
+        }
+
+        .historico-item.negativo {
+            background: rgba(220, 53, 69, 0.3);
+        }
+
+        .historico-item.reset {
+            background: rgba(108, 117, 125, 0.3);
+        }
+
+        .mensagem {
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mensagem.mostrar {
+            opacity: 1;
+        }
+
+        .mensagem.sucesso {
+            background: rgba(40, 167, 69, 0.3);
+            color: #28a745;
+        }
+
+        .mensagem.erro {
+            background: rgba(220, 53, 69, 0.3);
+            color: #dc3545;
+        }
+
+        .mensagem.info {
+            background: rgba(0, 123, 255, 0.3);
+            color: #007bff;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .contador.animacao {
+            animation: pulse 0.5s ease;
+        }
+
+        .atalhos {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+            
+            .contador {
+                font-size: 3em;
+            }
+            
+            .botoes {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔢 Contador Interativo</h1>
+        
+        <div class="contador" id="contador">0</div>
+        
+        <div class="botoes">
+            <button class="btn-decrementar" onclick="decrementar()">-</button>
+            <button class="btn-resetar" onclick="resetar()">Reset</button>
+            <button class="btn-incrementar" onclick="incrementar()">+</button>
+        </div>
+
+        <div class="controles-avancados">
+            <h3>🎛️ Controles Avançados</h3>
+            <input type="number" id="valor-personalizado" placeholder="Digite um valor" value="5">
+            <button class="btn-personalizado" onclick="adicionarPersonalizado()">Adicionar Valor</button>
+            
+            <div style="margin-top: 15px;">
+                <button onclick="salvarEstado()" style="background: #17a2b8; color: white;">💾 Salvar</button>
+                <button onclick="carregarEstado()" style="background: #fd7e14; color: white;">📂 Carregar</button>
+            </div>
+        </div>
+
+        <div class="historico" id="historico">
+            <h4>📋 Histórico</h4>
+            <div id="historico-lista"></div>
+        </div>
+
+        <div class="mensagem" id="mensagem"></div>
+
+        <div class="atalhos">
+            <p>⌨️ Atalhos: + (incrementar), - (decrementar), R (resetar), Enter (valor personalizado)</p>
+        </div>
+    </div>
+
+    <script>
+        let contador = 0;
+        let historico = [];
+        let ultimaMensagem = '';
+
+        // Elementos do DOM
+        const elementoContador = document.getElementById('contador');
+        const elementoHistorico = document.getElementById('historico-lista');
+        const elementoMensagem = document.getElementById('mensagem');
+
+        // Funções principais
+        function incrementar() {
+            contador++;
+            atualizarContador();
+            adicionarAoHistorico('incrementar', '+1');
+            mostrarMensagem('Valor incrementado!', 'sucesso');
+        }
+
+        function decrementar() {
+            contador--;
+            atualizarContador();
+            adicionarAoHistorico('decrementar', '-1');
+            mostrarMensagem('Valor decrementado!', 'sucesso');
+        }
+
+        function resetar() {
+            if (contador !== 0) {
+                adicionarAoHistorico('resetar', `Reset de ${contador} para 0`);
+                contador = 0;
+                atualizarContador();
+                mostrarMensagem('Contador resetado!', 'info');
+            } else {
+                mostrarMensagem('Contador já está em zero!', 'erro');
+            }
+        }
+
+        function adicionarPersonalizado() {
+            const input = document.getElementById('valor-personalizado');
+            const valor = parseInt(input.value);
+            
+            if (isNaN(valor)) {
+                mostrarMensagem('Por favor, digite um número válido!', 'erro');
+                return;
+            }
+            
+            contador += valor;
+            atualizarContador();
+            adicionarAoHistorico('personalizado', `+${valor}`);
+            mostrarMensagem(`Adicionado ${valor} ao contador!`, 'sucesso');
+            input.value = '';
+        }
+
+        function atualizarContador() {
+            elementoContador.textContent = contador;
+            
+            // Remover classes anteriores
+            elementoContador.classList.remove('positivo', 'negativo', 'zero', 'animacao');
+            
+            // Adicionar classe apropriada
+            if (contador > 0) {
+                elementoContador.classList.add('positivo');
+            } else if (contador < 0) {
+                elementoContador.classList.add('negativo');
+            } else {
+                elementoContador.classList.add('zero');
+            }
+            
+            // Adicionar animação
+            elementoContador.classList.add('animacao');
+            setTimeout(() => {
+                elementoContador.classList.remove('animacao');
+            }, 500);
+        }
+
+        function adicionarAoHistorico(acao, descricao) {
+            const timestamp = new Date().toLocaleTimeString();
+            const item = {
+                acao: acao,
+                descricao: descricao,
+                valor: contador,
+                timestamp: timestamp
+            };
+            
+            historico.unshift(item);
+            
+            // Manter apenas os últimos 10 itens
+            if (historico.length > 10) {
+                historico = historico.slice(0, 10);
+            }
+            
+            atualizarHistorico();
+        }
+
+        function atualizarHistorico() {
+            elementoHistorico.innerHTML = '';
+            
+            historico.forEach(item => {
+                const div = document.createElement('div');
+                div.className = `historico-item ${item.acao}`;
+                div.textContent = `${item.timestamp} - ${item.descricao} = ${item.valor}`;
+                elementoHistorico.appendChild(div);
+            });
+        }
+
+        function mostrarMensagem(texto, tipo) {
+            elementoMensagem.textContent = texto;
+            elementoMensagem.className = `mensagem ${tipo} mostrar`;
+            
+            // Esconder mensagem após 3 segundos
+            setTimeout(() => {
+                elementoMensagem.classList.remove('mostrar');
+            }, 3000);
+        }
+
+        // Funções de persistência
+        function salvarEstado() {
+            const estado = {
+                contador: contador,
+                historico: historico,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('contadorEstado', JSON.stringify(estado));
+            mostrarMensagem('Estado salvo com sucesso!', 'sucesso');
+        }
+
+        function carregarEstado() {
+            const estadoSalvo = localStorage.getItem('contadorEstado');
+            
+            if (estadoSalvo) {
+                try {
+                    const estado = JSON.parse(estadoSalvo);
+                    contador = estado.contador;
+                    historico = estado.historico || [];
+                    
+                    atualizarContador();
+                    atualizarHistorico();
+                    mostrarMensagem('Estado carregado com sucesso!', 'sucesso');
+                } catch (erro) {
+                    mostrarMensagem('Erro ao carregar estado!', 'erro');
+                }
+            } else {
+                mostrarMensagem('Nenhum estado salvo encontrado!', 'erro');
+            }
+        }
+
+        // Eventos de teclado
+        document.addEventListener('keydown', function(evento) {
+            switch(evento.key) {
+                case '+':
+                case '=':
+                    evento.preventDefault();
+                    incrementar();
+                    break;
+                case '-':
+                    evento.preventDefault();
+                    decrementar();
+                    break;
+                case 'r':
+                case 'R':
+                    evento.preventDefault();
+                    resetar();
+                    break;
+                case 'Enter':
+                    if (document.activeElement.id === 'valor-personalizado') {
+                        evento.preventDefault();
+                        adicionarPersonalizado();
+                    }
+                    break;
+            }
+        });
+
+        // Funções de validação
+        function validarEntrada(valor) {
+            if (isNaN(valor)) {
+                mostrarMensagem('Por favor, digite um número válido!', 'erro');
+                return false;
+            }
+            return true;
+        }
+
+        // Funções de animação
+        function animarBotao(botao) {
+            botao.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                botao.style.transform = '';
+            }, 150);
+        }
+
+        // Adicionar animação aos botões
+        document.querySelectorAll('button').forEach(botao => {
+            botao.addEventListener('click', function() {
+                animarBotao(this);
+            });
+        });
+
+        // Inicialização
+        atualizarContador();
+        mostrarMensagem('Contador interativo carregado! Use os botões ou atalhos de teclado.', 'info');
+        
+        console.log('Contador interativo inicializado!');
+        console.log('Atalhos disponíveis: +, -, R, Enter');
+    </script>
+</body>
+</html> 

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 6 - DOM e Eventos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .exercicio {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .resultado {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .caixa {
+            width: 100px;
+            height: 100px;
+            background: #007bff;
+            margin: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .caixa:hover {
+            transform: scale(1.1);
+        }
+        .caixa.vermelha { background: #dc3545; }
+        .caixa.verde { background: #28a745; }
+        .caixa.amarela { background: #ffc107; color: black; }
+        .formulario {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .formulario input, .formulario textarea {
+            width: 100%;
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+        }
+        .lista-dinamica {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .lista-dinamica li {
+            padding: 8px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .lista-dinamica li:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .lista-dinamica li.removido {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Exercício 6 - DOM e Eventos</h1>
+        
+        <div class="grid">
+            <div class="exercicio">
+                <h3>✅ Exercício 1 – Seleção e modificação</h3>
+                <p>Selecione e modifique elementos do DOM</p>
+                
+                <p id="texto-dinamico">Este texto será modificado!</p>
+                <button onclick="modificarTexto()">Modificar Texto</button>
+                <button onclick="adicionarClasse()">Adicionar Classe</button>
+                <button onclick="removerClasse()">Remover Classe</button>
+                <div id="resultado1" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 2 – Eventos de mouse</h3>
+                <p>Caixas coloridas com eventos de mouse</p>
+                
+                <div class="caixa" id="caixa1">Clique aqui!</div>
+                <div class="caixa" id="caixa2">Passe o mouse!</div>
+                <div class="caixa" id="caixa3">Duplo clique!</div>
+                <div id="resultado2" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 3 – Formulário interativo</h3>
+                <p>Formulário com validação e eventos</p>
+                
+                <div class="formulario">
+                    <input type="text" id="nome-form" placeholder="Digite seu nome">
+                    <input type="email" id="email-form" placeholder="Digite seu email">
+                    <textarea id="mensagem-form" placeholder="Digite sua mensagem"></textarea>
+                    <button onclick="validarFormulario()">Enviar</button>
+                </div>
+                <div id="resultado3" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 4 – Lista de tarefas</h3>
+                <p>Lista dinâmica com adição e remoção</p>
+                
+                <input type="text" id="nova-tarefa" placeholder="Digite uma tarefa">
+                <button onclick="adicionarTarefa()">Adicionar Tarefa</button>
+                <button onclick="limparTarefas()">Limpar Todas</button>
+                <ul id="lista-tarefas" class="lista-dinamica"></ul>
+                <div id="resultado4" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 5 – Eventos de teclado</h3>
+                <p>Detecte teclas pressionadas</p>
+                
+                <input type="text" id="input-teclado" placeholder="Digite algo aqui...">
+                <p id="teclas-pressionadas">Teclas pressionadas aparecerão aqui</p>
+                <div id="resultado5" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 6 – Galeria de imagens</h3>
+                <p>Galeria simples com navegação</p>
+                
+                <div style="text-align: center;">
+                    <img id="imagem-galeria" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA3YmZmIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7DgGltYWdlbSAxPC90ZXh0Pjwvc3ZnPg==" alt="Imagem 1" style="max-width: 200px; border-radius: 10px;">
+                    <br>
+                    <button onclick="anteriorImagem()">Anterior</button>
+                    <span id="contador-imagem">1/3</span>
+                    <button onclick="proximaImagem()">Próxima</button>
+                </div>
+                <div id="resultado6" class="resultado"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Exercício 1 – Seleção e modificação
+        function modificarTexto() {
+            let elemento = document.getElementById('texto-dinamico');
+            elemento.textContent = 'Texto modificado com sucesso!';
+            elemento.style.color = '#28a745';
+            elemento.style.fontWeight = 'bold';
+            
+            document.getElementById('resultado1').innerHTML = '<strong>Resultado:</strong> Texto modificado!';
+        }
+
+        function adicionarClasse() {
+            let elemento = document.getElementById('texto-dinamico');
+            elemento.classList.add('destaque');
+            elemento.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+            elemento.style.padding = '10px';
+            elemento.style.borderRadius = '5px';
+            
+            document.getElementById('resultado1').innerHTML = '<strong>Resultado:</strong> Classe adicionada!';
+        }
+
+        function removerClasse() {
+            let elemento = document.getElementById('texto-dinamico');
+            elemento.classList.remove('destaque');
+            elemento.style.backgroundColor = '';
+            elemento.style.padding = '';
+            elemento.style.borderRadius = '';
+            
+            document.getElementById('resultado1').innerHTML = '<strong>Resultado:</strong> Classe removida!';
+        }
+
+        // Exercício 2 – Eventos de mouse
+        function configurarEventosMouse() {
+            let caixa1 = document.getElementById('caixa1');
+            let caixa2 = document.getElementById('caixa2');
+            let caixa3 = document.getElementById('caixa3');
+
+            // Clique simples
+            caixa1.addEventListener('click', function() {
+                this.style.backgroundColor = '#dc3545';
+                this.textContent = 'Clicado!';
+                document.getElementById('resultado2').innerHTML = '<strong>Evento:</strong> Clique detectado!';
+            });
+
+            // Mouse over
+            caixa2.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = '#28a745';
+                this.textContent = 'Mouse sobre!';
+            });
+
+            caixa2.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '#007bff';
+                this.textContent = 'Passe o mouse!';
+            });
+
+            // Duplo clique
+            caixa3.addEventListener('dblclick', function() {
+                this.style.backgroundColor = '#ffc107';
+                this.style.color = 'black';
+                this.textContent = 'Duplo clique!';
+                document.getElementById('resultado2').innerHTML = '<strong>Evento:</strong> Duplo clique detectado!';
+            });
+        }
+
+        // Exercício 3 – Formulário interativo
+        function validarFormulario() {
+            let nome = document.getElementById('nome-form').value;
+            let email = document.getElementById('email-form').value;
+            let mensagem = document.getElementById('mensagem-form').value;
+
+            if (!nome.trim()) {
+                alert('Por favor, digite seu nome!');
+                return;
+            }
+
+            if (!email.includes('@')) {
+                alert('Por favor, digite um email válido!');
+                return;
+            }
+
+            if (!mensagem.trim()) {
+                alert('Por favor, digite uma mensagem!');
+                return;
+            }
+
+            let resultado = `
+                <strong>Formulário enviado com sucesso!</strong><br>
+                Nome: ${nome}<br>
+                Email: ${email}<br>
+                Mensagem: ${mensagem}
+            `;
+
+            document.getElementById('resultado3').innerHTML = resultado;
+            
+            // Limpar formulário
+            document.getElementById('nome-form').value = '';
+            document.getElementById('email-form').value = '';
+            document.getElementById('mensagem-form').value = '';
+        }
+
+        // Exercício 4 – Lista de tarefas
+        function adicionarTarefa() {
+            let novaTarefa = document.getElementById('nova-tarefa').value;
+            
+            if (novaTarefa.trim()) {
+                let li = document.createElement('li');
+                li.textContent = novaTarefa;
+                
+                // Adicionar evento de clique para marcar como concluída
+                li.addEventListener('click', function() {
+                    this.classList.toggle('removido');
+                    atualizarContadorTarefas();
+                });
+                
+                document.getElementById('lista-tarefas').appendChild(li);
+                document.getElementById('nova-tarefa').value = '';
+                atualizarContadorTarefas();
+            } else {
+                alert('Por favor, digite uma tarefa!');
+            }
+        }
+
+        function limparTarefas() {
+            document.getElementById('lista-tarefas').innerHTML = '';
+            atualizarContadorTarefas();
+        }
+
+        function atualizarContadorTarefas() {
+            let total = document.getElementById('lista-tarefas').children.length;
+            let concluidas = document.querySelectorAll('#lista-tarefas .removido').length;
+            
+            document.getElementById('resultado4').innerHTML = `
+                <strong>Estatísticas:</strong><br>
+                Total: ${total}<br>
+                Concluídas: ${concluidas}<br>
+                Pendentes: ${total - concluidas}
+            `;
+        }
+
+        // Exercício 5 – Eventos de teclado
+        function configurarEventosTeclado() {
+            let input = document.getElementById('input-teclado');
+            let contador = 0;
+
+            input.addEventListener('keydown', function(evento) {
+                contador++;
+                let teclas = document.getElementById('teclas-pressionadas');
+                teclas.textContent = `Tecla pressionada: ${evento.key} (${contador} vezes)`;
+                
+                document.getElementById('resultado5').innerHTML = `
+                    <strong>Informações da tecla:</strong><br>
+                    Tecla: ${evento.key}<br>
+                    Código: ${evento.keyCode}<br>
+                    Ctrl pressionado: ${evento.ctrlKey}<br>
+                    Shift pressionado: ${evento.shiftKey}
+                `;
+            });
+        }
+
+        // Exercício 6 – Galeria de imagens
+        let imagens = [
+            'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA3YmZmIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7DgGltYWdlbSAxPC90ZXh0Pjwvc3ZnPg==',
+            'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGMzNTQ1Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7DgGltYWdlbSAyPC90ZXh0Pjwvc3ZnPg==',
+            'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMjhhNzQ1Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7DgGltYWdlbSAzPC90ZXh0Pjwvc3ZnPg=='
+        ];
+        let imagemAtual = 0;
+
+        function proximaImagem() {
+            imagemAtual = (imagemAtual + 1) % imagens.length;
+            atualizarImagem();
+        }
+
+        function anteriorImagem() {
+            imagemAtual = (imagemAtual - 1 + imagens.length) % imagens.length;
+            atualizarImagem();
+        }
+
+        function atualizarImagem() {
+            let img = document.getElementById('imagem-galeria');
+            let contador = document.getElementById('contador-imagem');
+            
+            img.src = imagens[imagemAtual];
+            contador.textContent = `${imagemAtual + 1}/${imagens.length}`;
+            
+            document.getElementById('resultado6').innerHTML = `<strong>Imagem atual:</strong> ${imagemAtual + 1}`;
+        }
+
+        // Eventos de teclado para navegação
+        document.addEventListener('keydown', function(evento) {
+            if (evento.key === 'ArrowRight') {
+                proximaImagem();
+            } else if (evento.key === 'ArrowLeft') {
+                anteriorImagem();
+            }
+        });
+
+        // Inicialização
+        configurarEventosMouse();
+        configurarEventosTeclado();
+        atualizarContadorTarefas();
+        
+        console.log("Exercício 6 carregado com sucesso!");
+        console.log("Teste os diferentes eventos do DOM!");
+    </script>
+</body>
+</html> 

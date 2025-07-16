@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 3 - Funções e Escopo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .exercicio {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .resultado {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .error {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        .success {
+            color: #51cf66;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Exercício 3 - Funções e Escopo</h1>
+        
+        <div class="grid">
+            <div class="exercicio">
+                <h3>✅ Exercício 1 – Funções básicas</h3>
+                <p>Crie uma função que receba o nome e diga "Olá, nome!"</p>
+                
+                <input type="text" id="nome1" placeholder="Digite seu nome">
+                <button onclick="exercicio1()">Saudar</button>
+                <div id="resultado1" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 2 – Funções com retorno</h3>
+                <p>Crie funções que retornem a soma e o dobro de um número</p>
+                
+                <input type="number" id="num1" placeholder="Primeiro número" value="5">
+                <input type="number" id="num2" placeholder="Segundo número" value="3">
+                <button onclick="exercicio2()">Calcular</button>
+                <div id="resultado2" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 3 – Arrow functions</h3>
+                <p>Crie arrow functions para verificar paridade e calcular área</p>
+                
+                <input type="number" id="numero" placeholder="Número para verificar" value="10">
+                <input type="number" id="base" placeholder="Base do retângulo" value="5">
+                <input type="number" id="altura" placeholder="Altura do retângulo" value="3">
+                <button onclick="exercicio3()">Testar Arrow Functions</button>
+                <div id="resultado3" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 4 – Testando escopo</h3>
+                <p>Teste o escopo de variáveis criadas dentro da função</p>
+                
+                <button onclick="exercicio4()">Testar Escopo</button>
+                <div id="resultado4" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 5 – Calculadora de funções</h3>
+                <p>Calculadora interativa com diferentes funções</p>
+                
+                <input type="number" id="calcBase" placeholder="Base" value="10">
+                <input type="number" id="calcAltura" placeholder="Altura" value="5">
+                <button onclick="exercicio5()">Calcular Geometria</button>
+                <div id="resultado5" class="resultado"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Exercício 1 – Funções básicas
+        function exercicio1() {
+            let nome = document.getElementById('nome1').value;
+            if (nome.trim()) {
+                let mensagem = saudar(nome);
+                document.getElementById('resultado1').innerHTML = `<strong>Resultado:</strong> ${mensagem}`;
+            } else {
+                alert("Por favor, digite um nome!");
+            }
+        }
+
+        function saudar(nome) {
+            return `Olá, ${nome}!`;
+        }
+
+        // Exercício 2 – Funções com retorno
+        function exercicio2() {
+            let num1 = parseInt(document.getElementById('num1').value);
+            let num2 = parseInt(document.getElementById('num2').value);
+
+            if (isNaN(num1) || isNaN(num2)) {
+                alert("Por favor, digite números válidos!");
+                return;
+            }
+
+            let soma = somar(num1, num2);
+            let dobro1 = dobrar(num1);
+            let dobro2 = dobrar(num2);
+
+            let resultado = `
+                <strong>Resultados:</strong><br>
+                Soma de ${num1} + ${num2} = ${soma}<br>
+                Dobro de ${num1} = ${dobro1}<br>
+                Dobro de ${num2} = ${dobro2}
+            `;
+
+            document.getElementById('resultado2').innerHTML = resultado;
+        }
+
+        function somar(a, b) {
+            return a + b;
+        }
+
+        function dobrar(numero) {
+            return numero * 2;
+        }
+
+        // Exercício 3 – Arrow functions
+        function exercicio3() {
+            let numero = parseInt(document.getElementById('numero').value);
+            let base = parseInt(document.getElementById('base').value);
+            let altura = parseInt(document.getElementById('altura').value);
+
+            if (isNaN(numero) || isNaN(base) || isNaN(altura)) {
+                alert("Por favor, digite números válidos!");
+                return;
+            }
+
+            let paridade = verificarParidade(numero);
+            let area = areaRetangulo(base, altura);
+
+            let resultado = `
+                <strong>Resultados:</strong><br>
+                ${numero} é ${paridade}<br>
+                Área do retângulo ${base}x${altura} = ${area}
+            `;
+
+            document.getElementById('resultado3').innerHTML = resultado;
+        }
+
+        const verificarParidade = numero => numero % 2 === 0 ? "par" : "ímpar";
+        const areaRetangulo = (base, altura) => base * altura;
+
+        // Exercício 4 – Testando escopo
+        function exercicio4() {
+            let resultado = "Testando escopo de variáveis...\n\n";
+            
+            // Variáveis locais
+            let variavelLocal = "Sou local";
+            const constanteLocal = "Também sou local";
+            
+            resultado += "✅ Dentro da função:\n";
+            resultado += `- variavelLocal: ${variavelLocal}\n`;
+            resultado += `- constanteLocal: ${constanteLocal}\n\n`;
+            
+            resultado += "❌ Tentando acessar fora da função:\n";
+            resultado += "- variavelLocal: ReferenceError (não existe)\n";
+            resultado += "- constanteLocal: ReferenceError (não existe)\n\n";
+            
+            resultado += "💡 Isso demonstra que variáveis criadas dentro de uma função só existem dentro dela!";
+            
+            document.getElementById('resultado4').innerHTML = `<pre>${resultado}</pre>`;
+            
+            // Tentar acessar fora (vai dar erro no console)
+            try {
+                console.log("Tentando acessar variavelLocal fora da função:", variavelLocal);
+            } catch (erro) {
+                console.error("Erro ao acessar variável local:", erro.message);
+            }
+        }
+
+        // Exercício 5 – Calculadora de funções
+        function exercicio5() {
+            let base = parseFloat(document.getElementById('calcBase').value);
+            let altura = parseFloat(document.getElementById('calcAltura').value);
+
+            if (isNaN(base) || isNaN(altura)) {
+                alert("Por favor, digite números válidos!");
+                return;
+            }
+
+            let area = calcularArea(base, altura);
+            let perimetro = calcularPerimetro(base, altura);
+            let ehQuadrado = verificarQuadrado(base, altura);
+
+            let resultado = `
+                <strong>Resultados:</strong><br>
+                Base: ${base}, Altura: ${altura}<br>
+                Área: ${area}<br>
+                Perímetro: ${perimetro}<br>
+                É quadrado? ${ehQuadrado ? "Sim" : "Não"}
+            `;
+
+            document.getElementById('resultado5').innerHTML = resultado;
+        }
+
+        const calcularArea = (base, altura) => base * altura;
+        const calcularPerimetro = (base, altura) => 2 * (base + altura);
+        const verificarQuadrado = (base, altura) => base === altura;
+
+        // Função para demonstrar escopo global vs local
+        let variavelGlobal = "Sou global";
+
+        function demonstrarEscopo() {
+            let variavelLocal = "Sou local";
+            console.log("Dentro da função:");
+            console.log("- Global:", variavelGlobal);
+            console.log("- Local:", variavelLocal);
+        }
+
+        // Mensagem inicial
+        console.log("Exercício 3 carregado com sucesso!");
+        console.log("Variável global:", variavelGlobal);
+        demonstrarEscopo();
+    </script>
+</body>
+</html> 

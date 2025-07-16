@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 8 - Gerador de Frases Aleatórias</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .frase-container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .frase {
+            font-size: 1.5em;
+            font-weight: 500;
+            line-height: 1.4;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .frase.animacao {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .botoes {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        button {
+            padding: 15px 25px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            min-width: 120px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-gerar {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-favoritar {
+            background: #ffc107;
+            color: black;
+        }
+
+        .btn-limpar {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-personalizar {
+            background: #007bff;
+            color: white;
+        }
+
+        .controles {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+        }
+
+        .controles h3 {
+            margin-bottom: 15px;
+        }
+
+        input, textarea {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+            font-size: 1em;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .favoritos {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .favorito-item {
+            padding: 8px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .favorito-item button {
+            padding: 5px 10px;
+            font-size: 0.8em;
+            min-width: auto;
+        }
+
+        .estatisticas {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 0.9em;
+        }
+
+        .mensagem {
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mensagem.mostrar {
+            opacity: 1;
+        }
+
+        .mensagem.sucesso {
+            background: rgba(40, 167, 69, 0.3);
+            color: #28a745;
+        }
+
+        .mensagem.info {
+            background: rgba(0, 123, 255, 0.3);
+            color: #007bff;
+        }
+
+        .atalhos {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+            
+            .frase {
+                font-size: 1.2em;
+            }
+            
+            .botoes {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💭 Gerador de Frases</h1>
+        
+        <div class="frase-container" id="frase-container">
+            <div class="frase" id="frase">Clique no botão para gerar uma frase</div>
+        </div>
+        
+        <div class="botoes">
+            <button class="btn-gerar" onclick="gerarFrase()">🎲 Gerar Frase</button>
+            <button class="btn-favoritar" onclick="favoritarFrase()">⭐ Favoritar</button>
+            <button class="btn-personalizar" onclick="mostrarPersonalizar()">✏️ Personalizar</button>
+        </div>
+
+        <div class="controles" id="controles-personalizar" style="display: none;">
+            <h3>✏️ Adicionar Nova Frase</h3>
+            <textarea id="nova-frase" placeholder="Digite sua frase aqui..." rows="3"></textarea>
+            <button onclick="adicionarFrase()" style="background: #28a745; color: white;">Adicionar</button>
+            <button onclick="ocultarPersonalizar()" style="background: #6c757d; color: white;">Cancelar</button>
+        </div>
+
+        <div class="favoritos" id="favoritos">
+            <h4>⭐ Frases Favoritas</h4>
+            <div id="lista-favoritos"></div>
+            <button class="btn-limpar" onclick="limparFavoritos()">🗑️ Limpar Favoritos</button>
+        </div>
+
+        <div class="estatisticas" id="estatisticas">
+            <h4>📊 Estatísticas</h4>
+            <div id="stats-content"></div>
+        </div>
+
+        <div class="mensagem" id="mensagem"></div>
+
+        <div class="atalhos">
+            <p>⌨️ Atalhos: Espaço (gerar), F (favoritar), Enter (adicionar frase)</p>
+        </div>
+    </div>
+
+    <script>
+        // Arrays de frases
+        let frases = [
+            "A prática leva à perfeição.",
+            "Não desista até se orgulhar.",
+            "Tudo começa com um simples passo.",
+            "Seja constante, não perfeito.",
+            "Você é mais capaz do que pensa.",
+            "Erros fazem parte do caminho.",
+            "Code, teste, aprenda, repita.",
+            "A persistência é a chave do sucesso.",
+            "Cada dia é uma nova oportunidade.",
+            "O conhecimento é poder.",
+            "Faça hoje o que pode fazer amanhã.",
+            "A simplicidade é a sofisticação máxima.",
+            "Aprenda com os erros dos outros.",
+            "A criatividade nasce da curiosidade.",
+            "O sucesso é construído dia após dia."
+        ];
+
+        let favoritos = [];
+        let fraseAtual = "";
+        let contadorGeracoes = 0;
+        let contadorFavoritos = 0;
+
+        // Elementos do DOM
+        const elementoFrase = document.getElementById('frase');
+        const elementoFraseContainer = document.getElementById('frase-container');
+        const elementoFavoritos = document.getElementById('lista-favoritos');
+        const elementoMensagem = document.getElementById('mensagem');
+        const elementoStats = document.getElementById('stats-content');
+
+        // Função principal para gerar frase
+        function gerarFrase() {
+            if (frases.length === 0) {
+                mostrarMensagem('Não há frases disponíveis!', 'info');
+                return;
+            }
+
+            let fraseAnterior = fraseAtual;
+            
+            // Garantir que não repita a frase anterior
+            do {
+                const indice = Math.floor(Math.random() * frases.length);
+                fraseAtual = frases[indice];
+            } while (fraseAtual === fraseAnterior && frases.length > 1);
+
+            // Adicionar animação
+            elementoFrase.classList.remove('animacao');
+            void elementoFrase.offsetWidth; // Forçar reflow
+            elementoFrase.classList.add('animacao');
+
+            elementoFrase.textContent = fraseAtual;
+            contadorGeracoes++;
+            
+            atualizarEstatisticas();
+            mostrarMensagem('Nova frase gerada!', 'sucesso');
+        }
+
+        // Função para favoritar frase
+        function favoritarFrase() {
+            if (!fraseAtual) {
+                mostrarMensagem('Gere uma frase primeiro!', 'info');
+                return;
+            }
+
+            if (favoritos.includes(fraseAtual)) {
+                mostrarMensagem('Esta frase já está nos favoritos!', 'info');
+                return;
+            }
+
+            favoritos.push(fraseAtual);
+            contadorFavoritos++;
+            atualizarFavoritos();
+            atualizarEstatisticas();
+            mostrarMensagem('Frase adicionada aos favoritos!', 'sucesso');
+        }
+
+        // Função para atualizar lista de favoritos
+        function atualizarFavoritos() {
+            elementoFavoritos.innerHTML = '';
+            
+            favoritos.forEach((frase, index) => {
+                const div = document.createElement('div');
+                div.className = 'favorito-item';
+                div.innerHTML = `
+                    <span>${frase}</span>
+                    <button onclick="removerFavorito(${index})" style="background: #dc3545; color: white; padding: 5px 10px; font-size: 0.8em;">🗑️</button>
+                `;
+                elementoFavoritos.appendChild(div);
+            });
+        }
+
+        // Função para remover favorito
+        function removerFavorito(index) {
+            favoritos.splice(index, 1);
+            contadorFavoritos--;
+            atualizarFavoritos();
+            atualizarEstatisticas();
+            mostrarMensagem('Frase removida dos favoritos!', 'sucesso');
+        }
+
+        // Função para limpar favoritos
+        function limparFavoritos() {
+            if (favoritos.length === 0) {
+                mostrarMensagem('Não há favoritos para limpar!', 'info');
+                return;
+            }
+
+            favoritos = [];
+            contadorFavoritos = 0;
+            atualizarFavoritos();
+            atualizarEstatisticas();
+            mostrarMensagem('Todos os favoritos foram removidos!', 'sucesso');
+        }
+
+        // Função para mostrar controles de personalização
+        function mostrarPersonalizar() {
+            document.getElementById('controles-personalizar').style.display = 'block';
+            document.getElementById('nova-frase').focus();
+        }
+
+        // Função para ocultar controles de personalização
+        function ocultarPersonalizar() {
+            document.getElementById('controles-personalizar').style.display = 'none';
+            document.getElementById('nova-frase').value = '';
+        }
+
+        // Função para adicionar nova frase
+        function adicionarFrase() {
+            const novaFrase = document.getElementById('nova-frase').value.trim();
+            
+            if (!novaFrase) {
+                mostrarMensagem('Por favor, digite uma frase!', 'info');
+                return;
+            }
+
+            if (frases.includes(novaFrase)) {
+                mostrarMensagem('Esta frase já existe!', 'info');
+                return;
+            }
+
+            frases.push(novaFrase);
+            document.getElementById('nova-frase').value = '';
+            ocultarPersonalizar();
+            mostrarMensagem('Frase adicionada com sucesso!', 'sucesso');
+        }
+
+        // Função para atualizar estatísticas
+        function atualizarEstatisticas() {
+            elementoStats.innerHTML = `
+                <strong>Total de frases:</strong> ${frases.length}<br>
+                <strong>Frases geradas:</strong> ${contadorGeracoes}<br>
+                <strong>Favoritos:</strong> ${contadorFavoritos}<br>
+                <strong>Última frase:</strong> ${fraseAtual || 'Nenhuma'}
+            `;
+        }
+
+        // Função para mostrar mensagens
+        function mostrarMensagem(texto, tipo) {
+            elementoMensagem.textContent = texto;
+            elementoMensagem.className = `mensagem ${tipo} mostrar`;
+            
+            // Esconder mensagem após 3 segundos
+            setTimeout(() => {
+                elementoMensagem.classList.remove('mostrar');
+            }, 3000);
+        }
+
+        // Função para salvar dados no localStorage
+        function salvarDados() {
+            const dados = {
+                frases: frases,
+                favoritos: favoritos,
+                contadorGeracoes: contadorGeracoes,
+                contadorFavoritos: contadorFavoritos
+            };
+            
+            localStorage.setItem('geradorFrases', JSON.stringify(dados));
+        }
+
+        // Função para carregar dados do localStorage
+        function carregarDados() {
+            const dadosSalvos = localStorage.getItem('geradorFrases');
+            
+            if (dadosSalvos) {
+                try {
+                    const dados = JSON.parse(dadosSalvos);
+                    frases = dados.frases || frases;
+                    favoritos = dados.favoritos || [];
+                    contadorGeracoes = dados.contadorGeracoes || 0;
+                    contadorFavoritos = dados.contadorFavoritos || 0;
+                    
+                    atualizarFavoritos();
+                    atualizarEstatisticas();
+                    mostrarMensagem('Dados carregados com sucesso!', 'sucesso');
+                } catch (erro) {
+                    console.error('Erro ao carregar dados:', erro);
+                }
+            }
+        }
+
+        // Eventos de teclado
+        document.addEventListener('keydown', function(evento) {
+            switch(evento.key) {
+                case ' ':
+                    evento.preventDefault();
+                    gerarFrase();
+                    break;
+                case 'f':
+                case 'F':
+                    evento.preventDefault();
+                    favoritarFrase();
+                    break;
+                case 'Enter':
+                    if (document.activeElement.id === 'nova-frase') {
+                        evento.preventDefault();
+                        adicionarFrase();
+                    }
+                    break;
+                case 'Escape':
+                    ocultarPersonalizar();
+                    break;
+            }
+        });
+
+        // Salvar dados periodicamente
+        setInterval(salvarDados, 30000); // Salvar a cada 30 segundos
+
+        // Inicialização
+        carregarDados();
+        atualizarEstatisticas();
+        mostrarMensagem('Gerador de frases carregado! Use Espaço para gerar ou F para favoritar.', 'info');
+        
+        console.log('Gerador de frases inicializado!');
+        console.log('Atalhos: Espaço (gerar), F (favoritar), Enter (adicionar)');
+    </script>
+</body>
+</html> 
