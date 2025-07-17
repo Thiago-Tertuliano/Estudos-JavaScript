@@ -1,93 +1,229 @@
-🎓 JavaScript Avançado – Aula 8
-🔹 Tema: Objetos Complexos e JSON (JavaScript Object Notation)
-1. 📦 Trabalhando com Objetos Aninhados
-js
-Copy
-Edit
-const usuario = {
-  nome: "Thiago",
-  idade: 28,
+🎓 JavaScript Avançado – Aula 8a: Objetos Complexos e JSON (JavaScript Object Notation)
+
+## 📚 Conceitos Fundamentais
+
+###1📦 Trabalhando com Objetos Aninhados
+
+Objetos aninhados são estruturas onde um objeto contém outros objetos como propriedades. Isso permite organizar dados de forma hierárquica e lógica.
+
+```javascript
+const usuario =[object Object]  nome: Thiago",
+  idade: 28
   endereco: {
-    rua: "Av. Principal",
+    rua:Av. Principal,
     numero: 123,
-    cidade: "São Paulo"
+    cidade: São Paulo,
+    cep: 01234-567
   },
-  interesses: ["corrida", "tecnologia"]
+  interesses: ["corrida, "tecnologia",música"],
+  contato:[object Object]    email:thiago@email.com",
+    telefone: {
+      celular: "(11) 99999-9999,
+      fixo:(11 333333    }
+  }
 };
 
+// Acessando propriedades aninhadas
 console.log(usuario.endereco.cidade); // São Paulo
-console.log(usuario.interesses[1]); // tecnologia
-Você pode acessar valores aninhados usando ponto (.) ou colchetes ([]).
+console.log(usuario.contato.telefone.celular); // (11) 99999-9999onsole.log(usuario.interesses[1); // tecnologia
 
-2. 🔁 Iterando sobre Objetos
-js
-Copy
-Edit
+// Verificando se propriedades existem
+if (usuario.endereco && usuario.endereco.cidade) {
+  console.log(`Cidade: ${usuario.endereco.cidade}`);
+}
+```
+
+**Dicas importantes:**
+- Use ponto (.) para acessar propriedades aninhadas
+- Use colchetes ([]) para propriedades com nomes especiais ou variáveis
+- Sempre verifique se a propriedade existe antes de acessá-la
+
+### 2. 🔁 Iterando sobre Objetos
+
+Existem várias formas de percorrer objetos e suas propriedades:
+
+```javascript
+// Usando for...in para iterar sobre as chaves
 for (let chave in usuario) {
-  console.log(`${chave}: ${usuario[chave]}`);
+  console.log(`$[object Object]chave}: ${usuario[chave]}`);
 }
-Para percorrer arrays:
 
-js
-Copy
-Edit
-usuario.interesses.forEach(item => {
-  console.log(item);
+// Usando Object.keys() para obter array de chaves
+const chaves = Object.keys(usuario);
+chaves.forEach(chave => {
+  console.log(`$[object Object]chave}: ${usuario[chave]}`);
 });
-3. ✨ JSON: o formato universal de dados
-JSON é um formato textual usado para troca de dados entre sistemas (ex: APIs).
 
-Exemplo de JSON:
-json
-Copy
-Edit
+// Usando Object.entries() para obter pares chave-valor
+Object.entries(usuario).forEach(([chave, valor]) => {
+  console.log(`${chave}: ${valor}`);
+});
+
+// Iterando sobre arrays dentro do objeto
+usuario.interesses.forEach((interesse, index) =>[object Object]console.log(`Interesse ${index + 1}: ${interesse}`);
+});
+```
+
+###3 ✨ JSON: O Formato Universal de Dados
+
+JSON (JavaScript Object Notation) é um formato de texto leve usado para troca de dados entre sistemas. É independente de linguagem de programação e é amplamente usado em APIs.
+
+**Características do JSON:**
+- Usa aspas duplas para strings
+- Não aceita comentários
+- Não aceita funções
+- Não aceita undefined
+- Aceita apenas: strings, números, booleanos, null, arrays e objetos
+
+**Exemplo de JSON válido:**
+```json
 {
-  "nome": "Thiago",
-  "idade": 28
+  nome": Thiago,
+idade": 28
+  ativo": true,
+hobbies: ["corrida, tecnologia"],
+ endereco:[object Object]cidade": São Paulo",
+    pais: rasil
+  }
 }
-4. 📥 JSON.parse() e JSON.stringify()
-js
-Copy
-Edit
-// Convertendo JSON para objeto
-const json = '{"nome":"Thiago","idade":28}';
+```
+
+### 4 📥 JSON.parse() e JSON.stringify()
+
+#### JSON.stringify()
+Converte objetos JavaScript em strings JSON:
+
+```javascript
+const pessoa =[object Object] 
+  nome: Lucas,
+  idade:31,
+  ativo: true,
+  hobbies: [futebol", "música"]
+};
+
+const jsonStr = JSON.stringify(pessoa);
+console.log(jsonStr); 
+// {"nome:Lucas","idade":31ivo":true,"hobbies":["futebol",música"]}
+
+// Com formatação (indentação)
+const jsonFormatado = JSON.stringify(pessoa, null, 2);
+console.log(jsonFormatado);
+```
+
+#### JSON.parse()
+Converte strings JSON em objetos JavaScript:
+
+```javascript
+const json = '{"nome":"Thiago","idade:28ivo":true}';
 const obj = JSON.parse(json);
 console.log(obj.nome); // Thiago
+console.log(typeof obj.idade); // number
+console.log(typeof obj.ativo); // boolean
+```
 
-// Convertendo objeto para JSON
-const pessoa = { nome: "Lucas", idade: 31 };
-const jsonStr = JSON.stringify(pessoa);
-console.log(jsonStr); // {"nome":"Lucas","idade":31}
-5. ✅ Validação com JSON
-Lembre-se:
+### 5. ✅ Validação e Tratamento de Erros
 
-Chaves e strings devem estar entre aspas duplas.
+```javascript
+// Tratamento de erros ao fazer parse
+try {
+  const jsonInvalido ={"nome": Thiago,idade": 28,}'; // JSON inválido
+  const obj = JSON.parse(jsonInvalido);
+} catch (erro)[object Object]
+  console.error('Erro ao fazer parse do JSON:,erro.message);
+}
 
-JSON não aceita funções ou comentários.
+// Verificando se uma string é JSON válido
+function isJSONValido(str) {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (e) [object Object]    return false;
+  }
+}
 
-🧪 Exercício
-Crie um objeto livro com:
+console.log(isJSONValido('{"nome: este"}')); // true
+console.log(isJSONValido({"nome": "teste"')); // false
+```
 
-título, autor, ano, categorias (array).
+### 6🔧 Casos de Uso Práticos
 
-Converta para JSON.
-
-Parse o JSON de volta para objeto.
-
-Acesse uma das categorias e exiba no console.
-
-js
-Copy
-Edit
-const livro = {
-  titulo: "JS Avançado",
-  autor: "Thiago",
-  ano: 2025,
-  categorias: ["programação", "web"]
+#### Salvando dados no localStorage
+```javascript
+const dadosUsuario =[object Object]  nome: Thiago,  preferencias: {
+    tema:escuro,
+    idioma: pt-BR"
+  }
 };
 
-const jsonLivro = JSON.stringify(livro);
-console.log(jsonLivro);
+// Salvando
+localStorage.setItem('usuario', JSON.stringify(dadosUsuario));
 
-const objLivro = JSON.parse(jsonLivro);
-console.log(objLivro.categorias[0]); // programação
+// Recuperando
+const dadosSalvos = JSON.parse(localStorage.getItem(usuario));
+```
+
+#### Trabalhando com APIs
+```javascript
+// Simulando resposta de API
+const respostaAPI = {usuarios":[{id:1nome:na"},{"id":2nome":"João}]}';
+const dados = JSON.parse(respostaAPI);
+
+dados.usuarios.forEach(usuario =>[object Object]
+  console.log(`ID: $[object Object]usuario.id}, Nome: ${usuario.nome}`);
+});
+```
+
+---
+
+## 🧪 Exercício Prático: Sistema de Biblioteca
+
+### Enunciado
+
+Você foi contratado para desenvolver um sistema de gerenciamento de biblioteca. Sua tarefa é criar um sistema que permita:
+
+1**Criar objetos de livros** com as seguintes propriedades:
+   - `titulo` (string)
+   - `autor` (string)
+   - `ano` (number)
+   - `categorias` (array de strings)
+   - `disponivel` (boolean)
+   - `avaliacoes` (array de objetos com `usuario` e `nota`)2**Implementar funcionalidades**:
+   - Converter livros para JSON
+   - Fazer parse de JSON para objetos
+   - Adicionar novas avaliações
+   - Calcular nota média de cada livro
+   - Filtrar livros por categoria
+   - Buscar livros por título ou autor
+
+3. **Criar uma biblioteca** com pelo menos 5 livros diferentes
+
+### Requisitos Técnicos
+
+- Use objetos aninhados para estruturar os dados
+- Implemente todas as conversões JSON necessárias
+- Crie funções para manipular os dados
+- Adicione tratamento de erros
+- Use métodos de array como `forEach`, `filter`, `map`, `reduce`
+
+### Exemplo de Estrutura
+
+```javascript
+const livro = {
+  titulo:JavaScript: O Guia Definitivo,  autor: David Flanagan",
+  ano: 220,
+  categorias: ["programação,javascript", "web"],
+  disponivel: true,
+  avaliacoes:    { usuario: Ana", nota: 5 },
+    { usuario: João", nota: 4 }
+  ]
+};
+```
+
+### Entregáveis
+
+1. Código JavaScript completo com todas as funcionalidades
+2. Demonstração das conversões JSON
+3xemplos de uso das funções criadas
+4. Tratamento de erros implementado
+
+**Dica:** Comece criando os objetos de livros, depois implemente as funções uma por vez, testando cada funcionalidade antes de prosseguir.
