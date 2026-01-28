@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 1 - Primeiros Testes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .exercicio {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .resultado {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Exercício 1 - Primeiros Testes</h1>
+        
+        <div class="exercicio">
+            <h3>✅ Exercício 1 – Primeiros testes</h3>
+            <p>1. Crie um HTML simples com &lt;script&gt; no final do &lt;body&gt;</p>
+            <p>2. Exiba no console: "Thiago iniciou o curso de JS!"</p>
+            <p>3. Mostre um alert() com uma mensagem personalizada</p>
+            <p>4. Teste um console.error() com uma frase divertida 😅</p>
+            
+            <button onclick="testarConsole()">Testar Console</button>
+            <button onclick="testarAlert()">Testar Alert</button>
+            <button onclick="testarError()">Testar Error</button>
+            
+            <div id="resultado" class="resultado">
+                <strong>Resultado:</strong> Abra o console (F12) para ver os resultados!
+            </div>
+        </div>
+
+        <div class="exercicio">
+            <h3>✅ Exercício 2 – Interação básica</h3>
+            <p>Crie uma função que receba o nome e diga "Olá, nome!"</p>
+            
+            <input type="text" id="nome" placeholder="Digite seu nome" style="padding: 8px; margin: 5px;">
+            <button onclick="cumprimentar()">Cumprimentar</button>
+            
+            <div id="cumprimento" class="resultado"></div>
+        </div>
+
+        <div class="exercicio">
+            <h3>✅ Exercício 3 – Calculadora simples</h3>
+            <p>Faça operações matemáticas básicas</p>
+            
+            <input type="number" id="num1" placeholder="Primeiro número" style="padding: 8px; margin: 5px; width: 120px;">
+            <input type="number" id="num2" placeholder="Segundo número" style="padding: 8px; margin: 5px; width: 120px;">
+            <button onclick="calcular()">Calcular</button>
+            
+            <div id="calculo" class="resultado"></div>
+        </div>
+    </div>
+
+    <script>
+        // Exercício 1 - Primeiros testes
+        function testarConsole() {
+            console.log("Thiago iniciou o curso de JS!");
+            document.getElementById('resultado').innerHTML = '<strong>Console:</strong> "Thiago iniciou o curso de JS!" foi exibido no console!';
+        }
+
+        function testarAlert() {
+            alert("Bem-vindo ao curso de JavaScript! 🚀");
+            document.getElementById('resultado').innerHTML = '<strong>Alert:</strong> Mensagem personalizada exibida!';
+        }
+
+        function testarError() {
+            console.error("Ops! Algo deu errado... mas não se preocupe, é só um teste! 😅");
+            document.getElementById('resultado').innerHTML = '<strong>Error:</strong> Frase divertida exibida no console como erro!';
+        }
+
+        // Exercício 2 - Interação básica
+        function cumprimentar() {
+            let nome = document.getElementById('nome').value;
+            if (nome.trim()) {
+                let mensagem = `Olá, ${nome}! Bem-vindo ao JavaScript!`;
+                alert(mensagem);
+                console.log("Usuário " + nome + " foi cumprimentado");
+                document.getElementById('cumprimento').innerHTML = '<strong>Resultado:</strong> ' + mensagem;
+            } else {
+                alert("Por favor, digite um nome!");
+            }
+        }
+
+        // Exercício 3 - Calculadora simples
+        function calcular() {
+            let num1 = parseFloat(document.getElementById('num1').value);
+            let num2 = parseFloat(document.getElementById('num2').value);
+            
+            if (isNaN(num1) || isNaN(num2)) {
+                alert("Por favor, digite números válidos!");
+                return;
+            }
+            
+            let soma = num1 + num2;
+            let subtracao = num1 - num2;
+            let multiplicacao = num1 * num2;
+            let divisao = num2 !== 0 ? num1 / num2 : "Indefinido";
+            
+            let resultado = `
+                <strong>Resultados:</strong><br>
+                Soma: ${soma}<br>
+                Subtração: ${subtracao}<br>
+                Multiplicação: ${multiplicacao}<br>
+                Divisão: ${divisao}
+            `;
+            
+            alert(`A soma de ${num1} + ${num2} = ${soma}`);
+            console.log("Cálculos realizados com sucesso!");
+            document.getElementById('calculo').innerHTML = resultado;
+        }
+
+        // Mensagem inicial
+        console.log("Exercício 1 carregado com sucesso!");
+        console.log("Abra o console (F12) para ver mais detalhes!");
+    </script>
+</body>
+</html> 

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 2 - Variáveis e Operações</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .exercicio {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .resultado {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Exercício 2 - Variáveis e Operações</h1>
+        
+        <div class="grid">
+            <div class="exercicio">
+                <h3>✅ Exercício 1 – Variáveis básicas</h3>
+                <p>Crie variáveis com seus dados pessoais e exiba uma frase formatada</p>
+                
+                <button onclick="exercicio1()">Executar Exercício 1</button>
+                <div id="resultado1" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 2 – Operações matemáticas</h3>
+                <p>Realize operações matemáticas com números</p>
+                
+                <input type="number" id="num1" placeholder="Primeiro número" value="15">
+                <input type="number" id="num2" placeholder="Segundo número" value="7">
+                <button onclick="exercicio2()">Calcular Operações</button>
+                <div id="resultado2" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 3 – Comparações e lógica</h3>
+                <p>Teste operadores de comparação e lógicos</p>
+                
+                <input type="number" id="a" placeholder="Valor A" value="10">
+                <input type="text" id="b" placeholder="Valor B" value="10">
+                <input type="number" id="c" placeholder="Valor C" value="5">
+                <button onclick="exercicio3()">Testar Comparações</button>
+                <div id="resultado3" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 4 – Calculadora interativa</h3>
+                <p>Calculadora com validação de entrada</p>
+                
+                <input type="number" id="calc1" placeholder="Primeiro número">
+                <input type="number" id="calc2" placeholder="Segundo número">
+                <button onclick="exercicio4()">Calcular</button>
+                <div id="resultado4" class="resultado"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Exercício 1 – Variáveis básicas
+        function exercicio1() {
+            const nome = "Thiago";
+            const idade = 28;
+            const cidade = "São Paulo";
+            const profissao = "Desenvolvedor";
+
+            const mensagem = `Meu nome é ${nome}, tenho ${idade} anos, moro em ${cidade} e trabalho como ${profissao}.`;
+            
+            console.log(mensagem);
+            document.getElementById('resultado1').innerHTML = `<strong>Resultado:</strong> ${mensagem}`;
+        }
+
+        // Exercício 2 – Operações matemáticas
+        function exercicio2() {
+            let num1 = parseInt(document.getElementById('num1').value);
+            let num2 = parseInt(document.getElementById('num2').value);
+
+            if (isNaN(num1) || isNaN(num2)) {
+                alert("Por favor, digite números válidos!");
+                return;
+            }
+
+            let soma = num1 + num2;
+            let subtracao = num1 - num2;
+            let multiplicacao = num1 * num2;
+            let divisao = num1 / num2;
+            let resto = num1 % num2;
+            let potencia = num1 ** 2;
+
+            let resultado = `
+                <strong>Resultados:</strong><br>
+                Soma: ${soma}<br>
+                Subtração: ${subtracao}<br>
+                Multiplicação: ${multiplicacao}<br>
+                Divisão: ${divisao.toFixed(2)}<br>
+                Resto: ${resto}<br>
+                Potência (${num1}²): ${potencia}
+            `;
+
+            console.log("Operações matemáticas realizadas!");
+            document.getElementById('resultado2').innerHTML = resultado;
+        }
+
+        // Exercício 3 – Comparações e lógica
+        function exercicio3() {
+            let a = parseInt(document.getElementById('a').value);
+            let b = document.getElementById('b').value;
+            let c = parseInt(document.getElementById('c').value);
+
+            let comparacoes = `
+                <strong>Comparações:</strong><br>
+                a === b: ${a === b}<br>
+                a == b: ${a == b}<br>
+                a !== b: ${a !== b}<br>
+                a > c: ${a > c}<br>
+                a <= 10: ${a <= 10}
+            `;
+
+            let temIdade = true;
+            let temDocumento = false;
+            let podeVotar = temIdade && temDocumento;
+            let podeEntrar = temIdade || temDocumento;
+
+            let logicos = `
+                <strong>Operadores Lógicos:</strong><br>
+                Pode votar: ${podeVotar}<br>
+                Pode entrar: ${podeEntrar}
+            `;
+
+            console.log("Comparações e lógica testadas!");
+            document.getElementById('resultado3').innerHTML = comparacoes + "<br>" + logicos;
+        }
+
+        // Exercício 4 – Calculadora interativa
+        function exercicio4() {
+            let num1 = parseFloat(document.getElementById('calc1').value);
+            let num2 = parseFloat(document.getElementById('calc2').value);
+
+            if (isNaN(num1) || isNaN(num2)) {
+                alert("Por favor, digite números válidos!");
+                return;
+            }
+
+            let soma = num1 + num2;
+            let subtracao = num1 - num2;
+            let multiplicacao = num1 * num2;
+            let divisao = num2 !== 0 ? num1 / num2 : "Indefinido";
+
+            let resultado = `
+                <strong>Resultados:</strong><br>
+                Soma: ${soma}<br>
+                Subtração: ${subtracao}<br>
+                Multiplicação: ${multiplicacao}<br>
+                Divisão: ${divisao}
+            `;
+
+            alert(`A soma de ${num1} + ${num2} = ${soma}`);
+            console.log("Calculadora interativa executada!");
+            document.getElementById('resultado4').innerHTML = resultado;
+        }
+
+        // Mensagem inicial
+        console.log("Exercício 2 carregado com sucesso!");
+        console.log("Teste as diferentes funcionalidades!");
+    </script>
+</body>
+</html> 

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 4 - Condicionais</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .exercicio {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .resultado {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .cores {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .cor-btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+        }
+        .vermelho { background: #dc3545; }
+        .azul { background: #007bff; }
+        .verde { background: #28a745; }
+        .reset { background: #6c757d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Exercício 4 - Condicionais</h1>
+        
+        <div class="grid">
+            <div class="exercicio">
+                <h3>✅ Exercício 1 – Verificação de idade</h3>
+                <p>Crie uma variável idade e exiba se é maior ou menor de idade</p>
+                
+                <input type="number" id="idade" placeholder="Digite sua idade" value="20">
+                <button onclick="exercicio1()">Verificar Idade</button>
+                <div id="resultado1" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 2 – Sistema de login</h3>
+                <p>Crie uma verificação de login com usuario e senha</p>
+                
+                <input type="text" id="usuario" placeholder="Usuário" value="admin">
+                <input type="password" id="senha" placeholder="Senha" value="123456">
+                <button onclick="exercicio2()">Fazer Login</button>
+                <div id="resultado2" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 3 – Semáforo com switch</h3>
+                <p>Use switch para simular um semáforo</p>
+                
+                <select id="cor-semaforo">
+                    <option value="verde">Verde</option>
+                    <option value="amarelo">Amarelo</option>
+                    <option value="vermelho">Vermelho</option>
+                    <option value="azul">Azul (inválido)</option>
+                </select>
+                <button onclick="exercicio3()">Verificar Semáforo</button>
+                <div id="resultado3" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 4 – Verificação de paridade</h3>
+                <p>Crie um código que diga se um número é par ou ímpar</p>
+                
+                <input type="number" id="numero-paridade" placeholder="Digite um número" value="10">
+                <button onclick="exercicio4()">Verificar Paridade</button>
+                <div id="resultado4" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 5 – Sistema de notas</h3>
+                <p>Use o operador ternário para verificar aprovação</p>
+                
+                <input type="number" id="nota" placeholder="Digite a nota" value="7.5" step="0.1" min="0" max="10">
+                <button onclick="exercicio5()">Verificar Aprovação</button>
+                <div id="resultado5" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 6 – Mudando cor de fundo</h3>
+                <p>Botões para mudar a cor de fundo da página</p>
+                
+                <div class="cores">
+                    <button class="cor-btn vermelho" onclick="mudarCor('red')">Vermelho</button>
+                    <button class="cor-btn azul" onclick="mudarCor('blue')">Azul</button>
+                    <button class="cor-btn verde" onclick="mudarCor('green')">Verde</button>
+                    <button class="cor-btn reset" onclick="mudarCor('')">Reset</button>
+                </div>
+                <div id="resultado6" class="resultado"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Exercício 1 – Verificação de idade
+        function exercicio1() {
+            let idade = parseInt(document.getElementById('idade').value);
+            
+            if (isNaN(idade)) {
+                alert("Por favor, digite uma idade válida!");
+                return;
+            }
+
+            let status = (idade >= 18) ? "maior" : "menor";
+            let mensagem = `Você tem ${idade} anos e é ${status} de idade.`;
+            
+            document.getElementById('resultado1').innerHTML = `<strong>Resultado:</strong> ${mensagem}`;
+        }
+
+        // Exercício 2 – Sistema de login
+        function exercicio2() {
+            let usuario = document.getElementById('usuario').value;
+            let senha = document.getElementById('senha').value;
+
+            if (usuario === "admin" && senha === "123456") {
+                let mensagem = "Login realizado com sucesso!";
+                document.getElementById('resultado2').innerHTML = `<strong>Resultado:</strong> ${mensagem}`;
+                alert(mensagem);
+            } else {
+                let mensagem = "Usuário ou senha incorretos!";
+                document.getElementById('resultado2').innerHTML = `<strong>Resultado:</strong> ${mensagem}`;
+                alert(mensagem);
+            }
+        }
+
+        // Exercício 3 – Semáforo com switch
+        function exercicio3() {
+            let cor = document.getElementById('cor-semaforo').value;
+            let mensagem = "";
+
+            switch (cor.toLowerCase()) {
+                case "verde":
+                    mensagem = "Siga!";
+                    break;
+                case "amarelo":
+                    mensagem = "Atenção!";
+                    break;
+                case "vermelho":
+                    mensagem = "Pare!";
+                    break;
+                default:
+                    mensagem = "Cor inválida";
+            }
+
+            document.getElementById('resultado3').innerHTML = `<strong>Resultado:</strong> ${mensagem}`;
+        }
+
+        // Exercício 4 – Verificação de paridade
+        function exercicio4() {
+            let numero = parseInt(document.getElementById('numero-paridade').value);
+            
+            if (isNaN(numero)) {
+                alert("Por favor, digite um número válido!");
+                return;
+            }
+
+            let paridade = numero % 2 === 0 ? "par" : "ímpar";
+            let mensagem = `${numero} é ${paridade}`;
+            
+            document.getElementById('resultado4').innerHTML = `<strong>Resultado:</strong> ${mensagem}`;
+        }
+
+        // Exercício 5 – Sistema de notas
+        function exercicio5() {
+            let nota = parseFloat(document.getElementById('nota').value);
+            
+            if (isNaN(nota) || nota < 0 || nota > 10) {
+                alert("Por favor, digite uma nota válida entre 0 e 10!");
+                return;
+            }
+
+            let resultado = (nota >= 6) ? "Aprovado" : "Reprovado";
+            let mensagem = `Nota: ${nota} - Status: ${resultado}`;
+            
+            document.getElementById('resultado5').innerHTML = `<strong>Resultado:</strong> ${mensagem}`;
+        }
+
+        // Exercício 6 – Mudando cor de fundo
+        function mudarCor(cor) {
+            if (cor === "") {
+                document.body.style.backgroundColor = "";
+                document.getElementById('resultado6').innerHTML = "<strong>Resultado:</strong> Cor resetada!";
+            } else {
+                document.body.style.backgroundColor = cor;
+                document.getElementById('resultado6').innerHTML = `<strong>Resultado:</strong> Cor alterada para ${cor}!`;
+            }
+        }
+
+        // Sistema de classificação de notas mais detalhado
+        function classificarNota(nota) {
+            if (nota >= 9) return "Excelente";
+            if (nota >= 8) return "Muito bom";
+            if (nota >= 7) return "Bom";
+            if (nota >= 6) return "Regular";
+            return "Reprovado";
+        }
+
+        // Exemplo de uso do sistema de classificação
+        function testarClassificacao() {
+            let nota = parseFloat(document.getElementById('nota').value);
+            if (!isNaN(nota)) {
+                let classificacao = classificarNota(nota);
+                console.log(`Nota ${nota}: ${classificacao}`);
+            }
+        }
+
+        // Eventos de teclado para alguns exercícios
+        document.addEventListener('keydown', function(evento) {
+            if (evento.key === 'Enter') {
+                // Executar o exercício ativo baseado no elemento focado
+                let elementoAtivo = document.activeElement;
+                if (elementoAtivo.id === 'idade') {
+                    exercicio1();
+                } else if (elementoAtivo.id === 'usuario' || elementoAtivo.id === 'senha') {
+                    exercicio2();
+                } else if (elementoAtivo.id === 'numero-paridade') {
+                    exercicio4();
+                } else if (elementoAtivo.id === 'nota') {
+                    exercicio5();
+                }
+            }
+        });
+
+        // Mensagem inicial
+        console.log("Exercício 4 carregado com sucesso!");
+        console.log("Teste as diferentes condicionais!");
+    </script>
+</body>
+</html> 

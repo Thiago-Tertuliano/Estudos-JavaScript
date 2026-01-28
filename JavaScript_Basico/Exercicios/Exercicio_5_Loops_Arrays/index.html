@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 5 - Loops e Arrays</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .exercicio {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .resultado {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .lista {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .lista li {
+            padding: 5px;
+            margin: 2px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .lista li:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Exercício 5 - Loops e Arrays</h1>
+        
+        <div class="grid">
+            <div class="exercicio">
+                <h3>✅ Exercício 1 – Arrays básicos</h3>
+                <p>Crie um array com 5 nomes e exiba cada nome com for</p>
+                
+                <button onclick="exercicio1()">Executar Exercício 1</button>
+                <div id="resultado1" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 2 – Contagens</h3>
+                <p>Faça uma contagem de 1 a 10 com for e while</p>
+                
+                <button onclick="exercicio2()">Executar Contagens</button>
+                <div id="resultado2" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 3 – Números pares</h3>
+                <p>Crie um array de números e exiba apenas os pares</p>
+                
+                <button onclick="exercicio3()">Encontrar Pares</button>
+                <div id="resultado3" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 4 – Manipulando arrays</h3>
+                <p>Use .push() para adicionar itens e .includes() para verificar</p>
+                
+                <input type="text" id="novo-item" placeholder="Digite um item">
+                <button onclick="exercicio4()">Adicionar Item</button>
+                <button onclick="verificarThiago()">Verificar Thiago</button>
+                <div id="resultado4" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 5 – Calculadora de estatísticas</h3>
+                <p>Crie um array de notas e calcule estatísticas</p>
+                
+                <button onclick="exercicio5()">Calcular Estatísticas</button>
+                <div id="resultado5" class="resultado"></div>
+            </div>
+
+            <div class="exercicio">
+                <h3>✅ Exercício 6 – Lista dinâmica</h3>
+                <p>Lista interativa com adição e remoção de itens</p>
+                
+                <input type="text" id="novo-lista" placeholder="Digite um item para a lista">
+                <button onclick="adicionarItem()">Adicionar</button>
+                <button onclick="limparLista()">Limpar Lista</button>
+                <ul id="lista-dinamica" class="lista"></ul>
+                <div id="resultado6" class="resultado"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Arrays para os exercícios
+        let nomes = ["Thiago", "Maria", "João", "Ana", "Pedro"];
+        let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        let notas = [8.5, 7.2, 9.0, 6.8, 8.9, 7.5];
+        let listaItens = ["Item 1", "Item 2"];
+
+        // Exercício 1 – Arrays básicos
+        function exercicio1() {
+            let resultado = "<strong>Nomes do array:</strong><br>";
+            
+            // Usando for tradicional
+            for (let i = 0; i < nomes.length; i++) {
+                resultado += `Nome ${i + 1}: ${nomes[i]}<br>`;
+            }
+            
+            resultado += "<br><strong>Usando for...of:</strong><br>";
+            for (let nome of nomes) {
+                resultado += `Nome: ${nome}<br>`;
+            }
+            
+            document.getElementById('resultado1').innerHTML = resultado;
+            console.log("Array de nomes processado!");
+        }
+
+        // Exercício 2 – Contagens
+        function exercicio2() {
+            let resultado = "<strong>Contagem com FOR:</strong><br>";
+            
+            for (let i = 1; i <= 10; i++) {
+                resultado += `For: ${i}<br>`;
+            }
+            
+            resultado += "<br><strong>Contagem com WHILE:</strong><br>";
+            let contador = 1;
+            while (contador <= 10) {
+                resultado += `While: ${contador}<br>`;
+                contador++;
+            }
+            
+            document.getElementById('resultado2').innerHTML = resultado;
+            console.log("Contagens realizadas!");
+        }
+
+        // Exercício 3 – Números pares
+        function exercicio3() {
+            let resultado = "<strong>Números pares:</strong><br>";
+            let pares = [];
+            
+            for (let numero of numeros) {
+                if (numero % 2 === 0) {
+                    pares.push(numero);
+                    resultado += `${numero} é par<br>`;
+                }
+            }
+            
+            resultado += `<br><strong>Array de pares:</strong> [${pares.join(', ')}]`;
+            
+            document.getElementById('resultado3').innerHTML = resultado;
+            console.log("Números pares encontrados:", pares);
+        }
+
+        // Exercício 4 – Manipulando arrays
+        function exercicio4() {
+            let novoItem = document.getElementById('novo-item').value;
+            
+            if (novoItem.trim()) {
+                listaItens.push(novoItem);
+                document.getElementById('novo-item').value = '';
+                
+                let resultado = `<strong>Item adicionado!</strong><br>Lista atual: [${listaItens.join(', ')}]`;
+                document.getElementById('resultado4').innerHTML = resultado;
+            } else {
+                alert("Por favor, digite um item!");
+            }
+        }
+
+        function verificarThiago() {
+            let temThiago = listaItens.includes("Thiago");
+            let resultado = `Thiago está na lista? ${temThiago ? "Sim" : "Não"}`;
+            
+            if (!temThiago) {
+                listaItens.push("Thiago");
+                resultado += "<br>Thiago foi adicionado à lista!";
+            }
+            
+            document.getElementById('resultado4').innerHTML = resultado;
+        }
+
+        // Exercício 5 – Calculadora de estatísticas
+        function exercicio5() {
+            let soma = 0;
+            let maior = notas[0];
+            let menor = notas[0];
+            
+            for (let nota of notas) {
+                soma += nota;
+                if (nota > maior) maior = nota;
+                if (nota < menor) menor = nota;
+            }
+            
+            let media = soma / notas.length;
+            
+            let resultado = `
+                <strong>Estatísticas das notas:</strong><br>
+                Média: ${media.toFixed(2)}<br>
+                Maior nota: ${maior}<br>
+                Menor nota: ${menor}<br>
+                Total de notas: ${notas.length}<br>
+                Soma total: ${soma}
+            `;
+            
+            document.getElementById('resultado5').innerHTML = resultado;
+            console.log("Estatísticas calculadas!");
+        }
+
+        // Exercício 6 – Lista dinâmica
+        function adicionarItem() {
+            let novoItem = document.getElementById('novo-lista').value;
+            
+            if (novoItem.trim()) {
+                let li = document.createElement('li');
+                li.textContent = novoItem;
+                
+                // Adicionar evento de clique para remover
+                li.addEventListener('click', function() {
+                    this.remove();
+                    atualizarContador();
+                });
+                
+                document.getElementById('lista-dinamica').appendChild(li);
+                document.getElementById('novo-lista').value = '';
+                atualizarContador();
+            } else {
+                alert("Por favor, digite um item!");
+            }
+        }
+
+        function limparLista() {
+            document.getElementById('lista-dinamica').innerHTML = '';
+            atualizarContador();
+        }
+
+        function atualizarContador() {
+            let itens = document.getElementById('lista-dinamica').children.length;
+            document.getElementById('resultado6').innerHTML = `<strong>Itens na lista:</strong> ${itens}`;
+        }
+
+        // Funções adicionais para demonstração
+        function demonstrarLoops() {
+            console.log("=== Demonstração de Loops ===");
+            
+            // For tradicional
+            console.log("For tradicional:");
+            for (let i = 0; i < 5; i++) {
+                console.log(`Índice: ${i}`);
+            }
+            
+            // For...of
+            console.log("For...of:");
+            for (let nome of nomes) {
+                console.log(`Nome: ${nome}`);
+            }
+            
+            // While
+            console.log("While:");
+            let contador = 0;
+            while (contador < 3) {
+                console.log(`Contador: ${contador}`);
+                contador++;
+            }
+        }
+
+        // Eventos de teclado
+        document.addEventListener('keydown', function(evento) {
+            if (evento.key === 'Enter') {
+                let elementoAtivo = document.activeElement;
+                if (elementoAtivo.id === 'novo-item') {
+                    exercicio4();
+                } else if (elementoAtivo.id === 'novo-lista') {
+                    adicionarItem();
+                }
+            }
+        });
+
+        // Inicialização
+        atualizarContador();
+        demonstrarLoops();
+        
+        console.log("Exercício 5 carregado com sucesso!");
+        console.log("Arrays disponíveis:", { nomes, numeros, notas, listaItens });
+    </script>
+</body>
+</html> 
