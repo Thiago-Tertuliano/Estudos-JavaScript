@@ -5,7 +5,7 @@ function soma(){
         soma += i;
     }
 
-    console.log(soma); // Imprime: 5050
+    console.log(soma); 
 }
 
 soma();
