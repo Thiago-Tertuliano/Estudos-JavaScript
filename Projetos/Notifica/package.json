@@ -1,0 +1,16 @@
+{
+  "name": "notifica",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=apps/api\" \"npm run dev --workspace=apps/worker\" \"npm run dev --workspace=apps/ws-consumer\"",
+    "build": "tsc --build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.3.2"
+  }
+}

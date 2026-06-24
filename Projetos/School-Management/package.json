@@ -1,0 +1,12 @@
+{
+  "name": "school-management",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/api",
+    "build": "tsc --build"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "restaurant-system",
+  "private": true,
+  "workspaces": [
+    "rest-system-js",
+    "rest-system-ts"
+  ],
+  "scripts": {
+    "dev:js": "npm run dev --workspace=rest-system-js",
+    "dev:ts": "npm run dev --workspace=rest-system-ts"
+  }
+}
